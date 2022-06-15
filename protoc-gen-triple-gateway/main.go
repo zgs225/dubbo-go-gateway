@@ -1,8 +1,8 @@
-// Command protoc-gen-grpc-gateway is a plugin for Google protocol buffer
+// Command protoc-gen-triple-gateway is a plugin for Google protocol buffer
 // compiler to generate a reverse-proxy, which converts incoming RESTful
 // HTTP/1 requests gRPC invocation.
 // You rarely need to run this program directly. Instead, put this program
-// into your $PATH with a name "protoc-gen-grpc-gateway" and run
+// into your $PATH with a name "protoc-gen-triple-gateway" and run
 //   protoc --grpc-gateway_out=output_directory path/to/input.proto
 //
 // See README.md for more details.
@@ -17,7 +17,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/codegenerator"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/descriptor"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway/internal/gengateway"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-triple-gateway/internal/gengateway"
 	"google.golang.org/protobuf/compiler/protogen"
 )
 

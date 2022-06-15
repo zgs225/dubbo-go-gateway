@@ -1,6 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
-package(default_visibility = ["//protoc-gen-grpc-gateway:__subpackages__"])
+package(default_visibility = ["//protoc-gen-triple-gateway:__subpackages__"])
 
 go_library(
     name = "gengateway",
@@ -9,7 +9,7 @@ go_library(
         "generator.go",
         "template.go",
     ],
-    importpath = "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway/internal/gengateway",
+    importpath = "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-triple-gateway/internal/gengateway",
     deps = [
         "//internal/casing",
         "//internal/descriptor",
@@ -40,5 +40,5 @@ go_test(
 alias(
     name = "go_default_library",
     actual = ":gengateway",
-    visibility = ["//protoc-gen-grpc-gateway:__subpackages__"],
+    visibility = ["//protoc-gen-triple-gateway:__subpackages__"],
 )
