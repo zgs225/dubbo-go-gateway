@@ -409,8 +409,12 @@ var (
 	metadata.HeaderMD = header
 	return stream, metadata, nil
 {{else}}
-	msg, err := client.{{.Method.GetName}}(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
+	headerMD := grpc_go_md.MD(metadata.HeaderMD)
+	trailerMD := grpc_go_md.MD(metadata.TrailerMD)
+	ctx = context.WithValue(ctx, constant.InterfaceKey, {{.Method.Service.GetName}}_ServiceDesc.ServiceName)
+
+	msg, err := client.{{.Method.GetName}}(ctx, &protoReq, grpc_go.Header(&headerMD), grpc_go.Trailer(&trailerMD))
+	return msg, metadata, err.GetError()
 {{end}}
 }`))
 
@@ -631,8 +635,8 @@ func Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}Server(ctx context.Context,
 {{range $svc := .Services}}
 // Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}FromEndpoint is same as Register{{$svc.GetName}}{{$.RegisterFuncSuffix}} but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}FromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
-	conn, err := grpc.Dial(endpoint, opts...)
+func Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}FromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc_go.DialOption) (err error) {
+	conn, err := grpc_go.Dial(endpoint, opts...)
 	if err != nil {
 		return err
 	}
@@ -656,8 +660,16 @@ func Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}FromEndpoint(ctx context.Co
 
 // Register{{$svc.GetName}}{{$.RegisterFuncSuffix}} registers the http handlers for service {{$svc.GetName}} to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}Client(ctx, mux, {{$svc.ClientConstructorName}}(conn))
+func Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}(ctx context.Context, mux *runtime.ServeMux, conn *grpc_go.ClientConn) error {
+	tmpConn := &struct{
+		timeout int
+		conn    *grpc_go.ClientConn
+	} {
+		timeout: 3600,
+		conn:    conn,
+	}
+	triConn := (*triple.TripleConn)(unsafe.Pointer(tmpConn))
+	return Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}Client(ctx, mux, {{$svc.ClientConstructorName}}(triConn))
 }
 
 // Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}Client registers the http handlers for service {{$svc.GetName}}

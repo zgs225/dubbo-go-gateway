@@ -34,6 +34,9 @@ func New(reg *descriptor.Registry, useRequestContext bool, registerFuncSuffix st
 		"context",
 		"io",
 		"net/http",
+		"unsafe",
+		"github.com/dubbogo/triple/pkg/common/constant",
+		"github.com/dubbogo/triple/pkg/triple",
 		"github.com/grpc-ecosystem/grpc-gateway/v2/runtime",
 		"github.com/grpc-ecosystem/grpc-gateway/v2/utilities",
 		"google.golang.org/protobuf/proto",
@@ -56,6 +59,17 @@ func New(reg *descriptor.Registry, useRequestContext bool, registerFuncSuffix st
 				pkg.Alias = alias
 				break
 			}
+		}
+		imports = append(imports, pkg)
+	}
+
+	for _, pkg := range []descriptor.GoPackage{
+		{Path: "github.com/dubbogo/grpc-go", Alias: "grpc_go"},
+		{Path: "github.com/dubbogo/grpc-go/metadata", Alias: "grpc_go_md"},
+	} {
+		pkg.Name = path.Base(pkg.Path)
+		if err := reg.ReserveGoPackageAlias(pkg.Alias, pkg.Path); err != nil {
+			panic(fmt.Errorf("duplicated alias [%s] for package [%s]", pkg.Alias, pkg.Path))
 		}
 		imports = append(imports, pkg)
 	}

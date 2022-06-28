@@ -14,3 +14,4 @@ vendor
 
 # Generated travis files
 .travis.yml
+protoc-gen-triple-gateway/protoc-gen-triple-gateway
