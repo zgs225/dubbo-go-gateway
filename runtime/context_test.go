@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"google.golang.org/grpc/metadata"
+	"github.com/zgs225/dubbo-go-gateway/runtime"
+	"github.com/dubbogo/grpc-go/metadata"
 )
 
 const (

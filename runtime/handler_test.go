@@ -8,10 +8,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	pb "github.com/grpc-ecosystem/grpc-gateway/v2/runtime/internal/examplepb"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
+	"github.com/zgs225/dubbo-go-gateway/runtime"
+	pb "github.com/zgs225/dubbo-go-gateway/runtime/internal/examplepb"
+	"github.com/dubbogo/grpc-go/codes"
+	"github.com/dubbogo/grpc-go/status"
 	"google.golang.org/protobuf/proto"
 )
 

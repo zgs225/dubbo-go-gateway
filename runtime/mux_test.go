@@ -11,12 +11,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/health/grpc_health_v1"
-	"google.golang.org/grpc/status"
+	"github.com/zgs225/dubbo-go-gateway/runtime"
+	"github.com/zgs225/dubbo-go-gateway/utilities"
+	"github.com/dubbogo/grpc-go"
+	"github.com/dubbogo/grpc-go/codes"
+	"github.com/dubbogo/grpc-go/health/grpc_health_v1"
+	"github.com/dubbogo/grpc-go/status"
 )
 
 func TestMuxServeHTTP(t *testing.T) {

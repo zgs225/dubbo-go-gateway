@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/zgs225/dubbo-go-gateway/runtime"
 )
 
 func TestMarshalerForRequest(t *testing.T) {

@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/descriptor"
+	"github.com/zgs225/dubbo-go-gateway/internal/descriptor"
 )
 
 func TestParseFlagsEmptyNoPanic(t *testing.T) {

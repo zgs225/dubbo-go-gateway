@@ -5,7 +5,7 @@ import (
 	"mime"
 	"net/http"
 
-	"google.golang.org/grpc/grpclog"
+	"github.com/dubbogo/grpc-go/grpclog"
 	"google.golang.org/protobuf/encoding/protojson"
 )
 

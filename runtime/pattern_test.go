@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
+	"github.com/zgs225/dubbo-go-gateway/utilities"
 )
 
 const (

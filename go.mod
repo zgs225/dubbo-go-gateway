@@ -1,9 +1,10 @@
-module github.com/grpc-ecosystem/grpc-gateway/v2
+module github.com/zgs225/dubbo-go-gateway
 
 go 1.17
 
 require (
 	github.com/antihax/optional v1.0.0
+	github.com/dubbogo/grpc-go v1.42.9
 	github.com/golang/glog v1.0.0
 	github.com/golang/protobuf v1.5.2
 	github.com/google/go-cmp v0.5.8
@@ -17,6 +18,10 @@ require (
 )
 
 require (
+	github.com/apache/dubbo-go-hessian2 v1.9.3 // indirect
+	github.com/dubbogo/gost v1.11.18 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
+	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
 	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
 	google.golang.org/appengine v1.6.6 // indirect

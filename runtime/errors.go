@@ -6,9 +6,9 @@ import (
 	"io"
 	"net/http"
 
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/grpclog"
-	"google.golang.org/grpc/status"
+	"github.com/dubbogo/grpc-go/codes"
+	"github.com/dubbogo/grpc-go/grpclog"
+	"github.com/dubbogo/grpc-go/status"
 )
 
 // ErrorHandlerFunc is the signature used to configure error handling.

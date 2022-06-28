@@ -4,9 +4,9 @@ package examplepb
 
 import (
 	context "context"
-	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
+	grpc "github.com/dubbogo/grpc-go"
+	codes "github.com/dubbogo/grpc-go/codes"
+	status "github.com/dubbogo/grpc-go/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -16,7 +16,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 // NonStandardServiceClient is the client API for NonStandardService service.
 //
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/github.com/dubbogo/grpc-go/?tab=doc#ClientConn.NewStream.
 type NonStandardServiceClient interface {
 	// Apply field mask to empty NonStandardMessage and return result.
 	Update(ctx context.Context, in *NonStandardUpdateRequest, opts ...grpc.CallOption) (*NonStandardMessage, error)

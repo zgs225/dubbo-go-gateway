@@ -13,9 +13,9 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/proto/sub"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
+	"github.com/zgs225/dubbo-go-gateway/examples/internal/proto/sub"
+	"github.com/zgs225/dubbo-go-gateway/runtime"
+	"github.com/zgs225/dubbo-go-gateway/utilities"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"

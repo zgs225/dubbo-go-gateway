@@ -9,9 +9,9 @@ import (
 	"strings"
 
 	"google.golang.org/genproto/googleapis/api/httpbody"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/grpclog"
-	"google.golang.org/grpc/status"
+	"github.com/dubbogo/grpc-go/codes"
+	"github.com/dubbogo/grpc-go/grpclog"
+	"github.com/dubbogo/grpc-go/status"
 	"google.golang.org/protobuf/proto"
 )
 

@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
-	"google.golang.org/grpc/grpclog"
+	"github.com/zgs225/dubbo-go-gateway/utilities"
+	"github.com/dubbogo/grpc-go/grpclog"
 )
 
 var (

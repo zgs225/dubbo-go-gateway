@@ -9,12 +9,12 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/httprule"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/grpclog"
-	"google.golang.org/grpc/health/grpc_health_v1"
-	"google.golang.org/grpc/metadata"
-	"google.golang.org/grpc/status"
+	"github.com/zgs225/dubbo-go-gateway/internal/httprule"
+	"github.com/dubbogo/grpc-go/codes"
+	"github.com/dubbogo/grpc-go/grpclog"
+	"github.com/dubbogo/grpc-go/health/grpc_health_v1"
+	"github.com/dubbogo/grpc-go/metadata"
+	"github.com/dubbogo/grpc-go/status"
 	"google.golang.org/protobuf/proto"
 )
 

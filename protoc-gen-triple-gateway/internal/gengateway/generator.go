@@ -7,8 +7,8 @@ import (
 	"path"
 
 	"github.com/golang/glog"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/descriptor"
-	gen "github.com/grpc-ecosystem/grpc-gateway/v2/internal/generator"
+	"github.com/zgs225/dubbo-go-gateway/internal/descriptor"
+	gen "github.com/zgs225/dubbo-go-gateway/internal/generator"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/pluginpb"
 )
@@ -37,14 +37,14 @@ func New(reg *descriptor.Registry, useRequestContext bool, registerFuncSuffix st
 		"unsafe",
 		"github.com/dubbogo/triple/pkg/common/constant",
 		"github.com/dubbogo/triple/pkg/triple",
-		"github.com/grpc-ecosystem/grpc-gateway/v2/runtime",
-		"github.com/grpc-ecosystem/grpc-gateway/v2/utilities",
+		"github.com/zgs225/dubbo-go-gateway/runtime",
+		"github.com/zgs225/dubbo-go-gateway/utilities",
 		"google.golang.org/protobuf/proto",
-		"google.golang.org/grpc",
-		"google.golang.org/grpc/codes",
-		"google.golang.org/grpc/grpclog",
-		"google.golang.org/grpc/metadata",
-		"google.golang.org/grpc/status",
+		"github.com/dubbogo/grpc-go",
+		"github.com/dubbogo/grpc-go/codes",
+		"github.com/dubbogo/grpc-go/grpclog",
+		"github.com/dubbogo/grpc-go/metadata",
+		"github.com/dubbogo/grpc-go/status",
 	} {
 		pkg := descriptor.GoPackage{
 			Path: pkgpath,

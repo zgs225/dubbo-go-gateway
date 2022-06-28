@@ -7,10 +7,10 @@ import (
 	"strings"
 
 	"github.com/golang/glog"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/codegenerator"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/descriptor"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/internal/genopenapi"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
+	"github.com/zgs225/dubbo-go-gateway/internal/codegenerator"
+	"github.com/zgs225/dubbo-go-gateway/internal/descriptor"
+	"github.com/zgs225/dubbo-go-gateway/protoc-gen-openapiv2/internal/genopenapi"
+	"github.com/zgs225/dubbo-go-gateway/utilities"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/pluginpb"
 )

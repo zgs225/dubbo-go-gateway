@@ -3,8 +3,8 @@ package genopenapi_test
 import (
 	"testing"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/descriptor"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/internal/genopenapi"
+	"github.com/zgs225/dubbo-go-gateway/internal/descriptor"
+	"github.com/zgs225/dubbo-go-gateway/protoc-gen-openapiv2/internal/genopenapi"
 	"gopkg.in/yaml.v3"
 
 	"google.golang.org/protobuf/proto"
