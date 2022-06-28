@@ -413,8 +413,8 @@ var (
 	trailerMD := grpc_go_md.MD(metadata.TrailerMD)
 	ctx = context.WithValue(ctx, constant.InterfaceKey, {{.Method.Service.GetName}}_ServiceDesc.ServiceName)
 
-	msg, err := client.{{.Method.GetName}}(ctx, &protoReq, grpc_go.Header(&headerMD), grpc_go.Trailer(&trailerMD))
-	return msg, metadata, err.GetError()
+	msg, callErr := client.{{.Method.GetName}}(ctx, &protoReq, grpc_go.Header(&headerMD), grpc_go.Trailer(&trailerMD))
+	return msg, metadata, callErr.GetError()
 {{end}}
 }`))
 
