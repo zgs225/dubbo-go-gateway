@@ -317,7 +317,10 @@ var (
 {{end}}
 {{template "request-func-signature" .}} {
 	var protoReq {{.Method.RequestType.GoType .Method.Service.File.GoPkg.Path}}
-	var metadata runtime.ServerMetadata
+	var metadata = runtime.ServerMetadata{
+		HeaderMD:  grpc_go_md.MD{},
+		TrailerMD: grpc_go_md.MD{},
+	}
 {{if .Body}}
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
@@ -414,6 +417,12 @@ var (
 	ctx = context.WithValue(ctx, constant.InterfaceKey, "{{.Method.Service.File.GetPackage}}.{{.Method.Service.GetName}}")
 
 	msg, callErr := client.{{.Method.GetName}}(ctx, &protoReq, grpc_go.Header(&headerMD), grpc_go.Trailer(&trailerMD))
+	attachments := callErr.GetAttachments()
+	for k, v := range attachments {
+		if s, ok := v.([]string); ok {
+			metadata.TrailerMD.Set(k, s...)
+		}
+	}
 	return msg, metadata, callErr.GetError()
 {{end}}
 }`))
