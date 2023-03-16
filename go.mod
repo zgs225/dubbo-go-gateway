@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/antihax/optional v1.0.0
-	github.com/dubbogo/grpc-go v1.42.9
+	github.com/dubbogo/grpc-go v1.42.10
 	github.com/golang/glog v1.0.0
 	github.com/golang/protobuf v1.5.2
 	github.com/google/go-cmp v0.5.8

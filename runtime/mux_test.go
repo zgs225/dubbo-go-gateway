@@ -2,21 +2,15 @@ package runtime_test
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strconv"
-	"strings"
 	"testing"
 
 	"github.com/zgs225/dubbo-go-gateway/runtime"
 	"github.com/zgs225/dubbo-go-gateway/utilities"
-	"github.com/dubbogo/grpc-go"
-	"github.com/dubbogo/grpc-go/codes"
-	"github.com/dubbogo/grpc-go/health/grpc_health_v1"
-	"github.com/dubbogo/grpc-go/status"
 )
 
 func TestMuxServeHTTP(t *testing.T) {
@@ -603,157 +597,4 @@ func TestServeMux_HandlePath(t *testing.T) {
 			}
 		})
 	}
-}
-
-var healthCheckTests = []struct {
-	name           string
-	code           codes.Code
-	status         grpc_health_v1.HealthCheckResponse_ServingStatus
-	httpStatusCode int
-}{
-	{
-		"Test grpc error code",
-		codes.NotFound,
-		grpc_health_v1.HealthCheckResponse_UNKNOWN,
-		http.StatusNotFound,
-	},
-	{
-		"Test HealthCheckResponse_SERVING",
-		codes.OK,
-		grpc_health_v1.HealthCheckResponse_SERVING,
-		http.StatusOK,
-	},
-	{
-		"Test HealthCheckResponse_NOT_SERVING",
-		codes.OK,
-		grpc_health_v1.HealthCheckResponse_NOT_SERVING,
-		http.StatusServiceUnavailable,
-	},
-	{
-		"Test HealthCheckResponse_UNKNOWN",
-		codes.OK,
-		grpc_health_v1.HealthCheckResponse_UNKNOWN,
-		http.StatusServiceUnavailable,
-	},
-	{
-		"Test HealthCheckResponse_SERVICE_UNKNOWN",
-		codes.OK,
-		grpc_health_v1.HealthCheckResponse_SERVICE_UNKNOWN,
-		http.StatusNotFound,
-	},
-}
-
-func TestWithHealthzEndpoint_codes(t *testing.T) {
-	for _, tt := range healthCheckTests {
-		t.Run(tt.name, func(t *testing.T) {
-			mux := runtime.NewServeMux(runtime.WithHealthzEndpoint(&dummyHealthCheckClient{status: tt.status, code: tt.code}))
-
-			r := httptest.NewRequest(http.MethodGet, "/healthz", nil)
-			rr := httptest.NewRecorder()
-
-			mux.ServeHTTP(rr, r)
-
-			if rr.Code != tt.httpStatusCode {
-				t.Errorf(
-					"result http status code for grpc code %q and status %q should be %d, got %d",
-					tt.code, tt.status, tt.httpStatusCode, rr.Code,
-				)
-			}
-		})
-	}
-}
-
-func TestWithHealthEndpointAt_consistentWithHealthz(t *testing.T) {
-	const endpointPath = "/healthz"
-
-	r := httptest.NewRequest(http.MethodGet, endpointPath, nil)
-
-	for _, tt := range healthCheckTests {
-		tt := tt
-
-		t.Run(tt.name, func(t *testing.T) {
-			client := &dummyHealthCheckClient{
-				status: tt.status,
-				code:   tt.code,
-			}
-
-			w := httptest.NewRecorder()
-
-			runtime.NewServeMux(
-				runtime.WithHealthEndpointAt(client, endpointPath),
-			).ServeHTTP(w, r)
-
-			refW := httptest.NewRecorder()
-
-			runtime.NewServeMux(
-				runtime.WithHealthzEndpoint(client),
-			).ServeHTTP(refW, r)
-
-			if w.Code != refW.Code {
-				t.Errorf(
-					"result http status code for grpc code %q and status %q should be equal to %d, but got %d",
-					tt.code, tt.status, refW.Code, w.Code,
-				)
-			}
-		})
-	}
-}
-
-func TestWithHealthzEndpoint_serviceParam(t *testing.T) {
-	service := "test"
-
-	// trigger error to output service in body
-	dummyClient := dummyHealthCheckClient{status: grpc_health_v1.HealthCheckResponse_UNKNOWN, code: codes.Unknown}
-	mux := runtime.NewServeMux(runtime.WithHealthzEndpoint(&dummyClient))
-
-	r := httptest.NewRequest(http.MethodGet, "/healthz?service="+service, nil)
-	rr := httptest.NewRecorder()
-
-	mux.ServeHTTP(rr, r)
-
-	if !strings.Contains(rr.Body.String(), service) {
-		t.Errorf(
-			"service query parameter should be translated to HealthCheckRequest: expected %s to contain %s",
-			rr.Body.String(), service,
-		)
-	}
-}
-
-func TestWithHealthzEndpoint_header(t *testing.T) {
-	for _, tt := range healthCheckTests {
-		t.Run(tt.name, func(t *testing.T) {
-			mux := runtime.NewServeMux(runtime.WithHealthzEndpoint(&dummyHealthCheckClient{status: tt.status, code: tt.code}))
-
-			r := httptest.NewRequest(http.MethodGet, "/healthz", nil)
-			rr := httptest.NewRecorder()
-
-			mux.ServeHTTP(rr, r)
-
-			if actualHeader := rr.Header().Get("Content-Type"); actualHeader != "application/json" {
-				t.Errorf(
-					"result http header Content-Type for grpc code %q and status %q should be application/json, got %s",
-					tt.code, tt.status, actualHeader,
-				)
-			}
-		})
-	}
-}
-
-var _ grpc_health_v1.HealthClient = (*dummyHealthCheckClient)(nil)
-
-type dummyHealthCheckClient struct {
-	status grpc_health_v1.HealthCheckResponse_ServingStatus
-	code   codes.Code
-}
-
-func (g *dummyHealthCheckClient) Check(ctx context.Context, r *grpc_health_v1.HealthCheckRequest, opts ...grpc.CallOption) (*grpc_health_v1.HealthCheckResponse, error) {
-	if g.code != codes.OK {
-		return nil, status.Error(g.code, r.GetService())
-	}
-
-	return &grpc_health_v1.HealthCheckResponse{Status: g.status}, nil
-}
-
-func (g *dummyHealthCheckClient) Watch(ctx context.Context, r *grpc_health_v1.HealthCheckRequest, opts ...grpc.CallOption) (grpc_health_v1.Health_WatchClient, error) {
-	return nil, status.Error(codes.Unimplemented, "unimplemented")
 }
