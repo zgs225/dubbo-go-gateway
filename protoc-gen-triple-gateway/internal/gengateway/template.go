@@ -674,7 +674,7 @@ func Register{{$svc.GetName}}{{$.RegisterFuncSuffix}}(ctx context.Context, mux *
 		timeout int
 		conn    *grpc_go.ClientConn
 	} {
-		timeout: 3600,
+		timeout: 24*3600*1000*1000*1000,
 		conn:    conn,
 	}
 	triConn := (*triple.TripleConn)(unsafe.Pointer(tmpConn))
